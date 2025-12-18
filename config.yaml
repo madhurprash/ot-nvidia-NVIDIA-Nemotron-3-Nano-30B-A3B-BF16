@@ -1,0 +1,39 @@
+general:
+  name: "nvidia-nemotron-vllm-deployment"
+  description: "vLLM deployment configuration for NVIDIA Nemotron-3-Nano-30B-A3B-BF16 model"
+
+# Model information and configuration
+model_information:
+  # Model deployment configuration
+  model_config:
+    # Model identifier from HuggingFace
+    model_id: "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-BF16"
+    # Trust remote code execution
+    trust_remote_code: true
+    # Data type for model weights (auto, float16, bfloat16, etc.)
+    dtype: "auto"
+
+  # vLLM Engine configuration for memory optimization
+  vllm_engine_config:
+    # Maximum sequence length (reduce to fit in GPU memory)
+    # Default is 262144, but 8192 is more reasonable for 48GB GPU
+    max_model_len: 8192
+    # GPU memory utilization (0.0 to 1.0)
+    gpu_memory_utilization: 0.85
+    # Allow CUDA graphs for efficiency
+    enforce_eager: false
+    # CPU swap space in GB for offloading
+    swap_space: 4
+    # PyTorch CUDA allocator configuration
+    pytorch_cuda_alloc_conf: "expandable_segments:True"
+
+  # Default inference parameters for generation
+  inference_parameters:
+    # Temperature controls randomness (0.0 to 1.0)
+    temperature: 0.6
+    # Maximum number of tokens to generate
+    max_tokens: 200
+    # Top-p sampling parameter (optional)
+    top_p: 1.0
+    # Top-k sampling parameter (optional)
+    top_k: -1
