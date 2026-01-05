@@ -67,4 +67,4 @@ from typing import Any, List, Optional, Tuple, Union, Dict, Set, Callable
 from transformers.models.nemotron.modeling_nemotron import (F, Tensor)
 
 def forward(self, input: Tensor) -> Tensor:
-    return F.group_norm(input, self.num_groups, self.weight, self.bias, self.eps).to(input.dtype).to(input.dtype).to(input.dtype).to(input.dtype).to(input.dtype)
+    return F.group_norm(input, self.num_groups, self.weight, self.bias, self.eps).to(input.dtype).to(input.dtype).to(input.dtype).to(input.dtype).to(input.dtype).to(input.dtype)

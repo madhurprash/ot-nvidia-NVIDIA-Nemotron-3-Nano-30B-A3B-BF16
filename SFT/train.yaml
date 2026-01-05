@@ -61,7 +61,7 @@ training:
   gradient_checkpointing: true  # Enable gradient checkpointing for memory efficiency
   bf16: true  # Enable BF16 training to match model dtype
   # Multi-GPU DDP settings
-  ddp_find_unused_parameters: false  # Set to false for better performance with LoRA
+  ddp_find_unused_parameters: True  # Set to false for better performance with LoRA
   ddp_backend: "nccl"  # Use NCCL backend for GPU communication
   
 # Output configuration
