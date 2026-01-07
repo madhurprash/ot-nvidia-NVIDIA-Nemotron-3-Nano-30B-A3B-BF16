@@ -1,5 +1,7 @@
 # Benchmark results
 benchmark_results/
+terminalbench/
+terminalbench-*/
 
 # Python cache
 __pycache__/

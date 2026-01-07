@@ -1,4 +1,0 @@
-bash: cannot set terminal process group (-1): Inappropriate ioctl for device
-bash: no job control in this shell
-/tests/test.sh: line 3: pip: command not found
-/tests/test.sh: line 5: pytest: command not found

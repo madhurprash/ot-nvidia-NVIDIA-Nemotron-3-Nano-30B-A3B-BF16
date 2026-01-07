@@ -1,140 +1,0 @@
-Get:1 http://deb.debian.org/debian bookworm InRelease [151 kB]
-Get:2 http://deb.debian.org/debian bookworm-updates InRelease [55.4 kB]
-Get:3 http://deb.debian.org/debian-security bookworm-security InRelease [48.0 kB]
-Get:4 http://deb.debian.org/debian bookworm/main amd64 Packages [8791 kB]
-Get:5 http://deb.debian.org/debian bookworm-updates/main amd64 Packages [6924 B]
-Get:6 http://deb.debian.org/debian-security bookworm-security/main amd64 Packages [290 kB]
-Fetched 9342 kB in 1s (7645 kB/s)
-Reading package lists...
-Reading package lists...
-Building dependency tree...
-Reading state information...
-The following additional packages will be installed:
-  libcurl4
-The following NEW packages will be installed:
-  curl libcurl4
-0 upgraded, 2 newly installed, 0 to remove and 0 not upgraded.
-Need to get 707 kB of archives.
-After this operation, 1361 kB of additional disk space will be used.
-Get:1 http://deb.debian.org/debian bookworm/main amd64 libcurl4 amd64 7.88.1-10+deb12u14 [392 kB]
-Get:2 http://deb.debian.org/debian bookworm/main amd64 curl amd64 7.88.1-10+deb12u14 [316 kB]
-Fetched 707 kB in 0s (11.2 MB/s)
-Selecting previously unselected package libcurl4:amd64.
-(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 10328 files and directories currently installed.)
-Preparing to unpack .../libcurl4_7.88.1-10+deb12u14_amd64.deb ...
-Unpacking libcurl4:amd64 (7.88.1-10+deb12u14) ...
-Selecting previously unselected package curl.
-Preparing to unpack .../curl_7.88.1-10+deb12u14_amd64.deb ...
-Unpacking curl (7.88.1-10+deb12u14) ...
-Setting up libcurl4:amd64 (7.88.1-10+deb12u14) ...
-Setting up curl (7.88.1-10+deb12u14) ...
-Processing triggers for libc-bin (2.36-9+deb12u13) ...
-no checksums to verify
-installing to /root/.local/bin
-  uv
-  uvx
-everything's installed!
-
-To add $HOME/.local/bin to your PATH, either restart your shell or run:
-
-    source $HOME/.local/bin/env (sh, bash, zsh)
-    source $HOME/.local/bin/env.fish (fish)
-============================= test session starts ==============================
-platform linux -- Python 3.13.11, pytest-8.4.1, pluggy-1.6.0
-rootdir: /tests
-plugins: hydra-core-1.3.0
-collected 7 items
-
-../../tests/test_outputs.py ....FFF                                      [100%]
-
-=================================== FAILURES ===================================
-__________________________________ test_debug __________________________________
-
-    def test_debug():
-        """Check that the debug command runs successfully and produces expected output."""
-        out = subprocess.run(
-            ["python", "/app/src/main.py", "+mode=debug", "--cfg", "job"],
-            stdout=subprocess.PIPE,
-        )
-    
-        ref_path = Path("/tests/ref_debug.yaml")
-    
-        assert out.returncode == 0, "Debug command failed"
-        assert out.stdout, "No output from debug command"
->       assert out.stdout.decode() == ref_path.read_text(), (
-            "Output does not match reference"
-        )
-E       AssertionError: Output does not match reference
-E       assert 'notes: my-ex...mode: debug\n' == 'notes: my-ex...m_epochs: 1\n'
-E         
-E           notes: my-experiment
-E         - debug: true
-E         + debug: false
-E           train:
-E             batch_size: 32
-E             learning_rate: 1.0e-05...
-E         
-E         ...Full output truncated (4 lines hidden), use '-vv' to show
-
-/tests/test_outputs.py:63: AssertionError
-________________________________ test_slurm_job ________________________________
-
-    def test_slurm_job():
-        """Check that the SLURM job command and keep the same job config."""
-        out = subprocess.run(
-            ["python", "/app/src/main.py", "-cn=slurm", "--cfg", "job"],
-            stdout=subprocess.PIPE,
-        )
-    
-        ref_path = Path("/tests/ref_original.yaml")
-    
->       assert out.returncode == 0, "Slurm job command failed"
-E       AssertionError: Slurm job command failed
-E       assert 1 == 0
-E        +  where 1 = CompletedProcess(args=['python', '/app/src/main.py', '-cn=slurm', '--cfg', 'job'], returncode=1, stdout=b'').returncode
-
-/tests/test_outputs.py:77: AssertionError
------------------------------ Captured stderr call -----------------------------
-Cannot find primary config 'slurm'. Check that it's in your config search path.
-
-Config search path:
-	provider=hydra, path=pkg://hydra.conf
-	provider=main, path=file:///app/src/config
-	provider=schema, path=structured://
-
-Set the environment variable HYDRA_FULL_ERROR=1 for a complete stack trace.
-_______________________________ test_slurm_hydra _______________________________
-
-    def test_slurm_hydra():
-        """Check that the SLURM hydra command runs and hydra launcher configured."""
-        out_hydra = subprocess.run(
-            ["python", "/app/src/main.py", "-cn=slurm", "--cfg", "hydra"],
-            stdout=subprocess.PIPE,
-        )
-        ref_path = Path("/tests/ref_slurm_hydra.yaml")
-    
->       assert out_hydra.returncode == 0, "Slurm hydra command failed"
-E       AssertionError: Slurm hydra command failed
-E       assert 1 == 0
-E        +  where 1 = CompletedProcess(args=['python', '/app/src/main.py', '-cn=slurm', '--cfg', 'hydra'], returncode=1, stdout=b'').returncode
-
-/tests/test_outputs.py:92: AssertionError
------------------------------ Captured stderr call -----------------------------
-Cannot find primary config 'slurm'. Check that it's in your config search path.
-
-Config search path:
-	provider=hydra, path=pkg://hydra.conf
-	provider=main, path=file:///app/src/config
-	provider=schema, path=structured://
-
-Set the environment variable HYDRA_FULL_ERROR=1 for a complete stack trace.
-==================================== PASSES ====================================
-=========================== short test summary info ============================
-PASSED ../../tests/test_outputs.py::test_main_untouched
-PASSED ../../tests/test_outputs.py::test_config_untouched
-PASSED ../../tests/test_outputs.py::test_hydra_submitit_launcher_installed
-PASSED ../../tests/test_outputs.py::test_original
-FAILED ../../tests/test_outputs.py::test_debug - AssertionError: Output does ...
-FAILED ../../tests/test_outputs.py::test_slurm_job - AssertionError: Slurm jo...
-FAILED ../../tests/test_outputs.py::test_slurm_hydra - AssertionError: Slurm ...
-========================= 3 failed, 4 passed in 1.26s ==========================

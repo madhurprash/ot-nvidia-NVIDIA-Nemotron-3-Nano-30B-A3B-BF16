@@ -15,22 +15,18 @@ model_information:
 
   # vLLM Engine configuration for memory optimization
   vllm_engine_config:
-    # Allow CUDA graphs for efficiency
-    enforce_eager: false
-    # PyTorch CUDA allocator configuration
-    pytorch_cuda_alloc_conf: "expandable_segments:True"
-    # Maximum context length (reduced to fit available GPU memory)
-    max_model_len: 131072
-    # Quantization method (fp8 for Devstral Small 2)
-    quantization: "fp8"
-    # KV cache dtype (fp8 reduces memory usage for long context)
-    kv_cache_dtype: "fp8"
-    # GPU memory utilization (0.90 leaves headroom)
-    gpu_memory_utilization: 0.90
+    # Maximum model context length
+    max_model_len: 262144
+    # Tensor parallel size for multi-GPU deployment
+    tensor_parallel_size: 8
+    # Tool call parser for function calling support
+    tool_call_parser: "mistral"
+    # Enable automatic tool choice
+    enable_auto_tool_choice: true
 
   # Default inference parameters for generation
   inference_parameters:
     # Temperature controls randomness (0.0 to 1.0)
-    temperature: 0.1
+    temperature: 0.6
     # Maximum number of tokens to generate
     max_tokens: 8192

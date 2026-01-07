@@ -18,6 +18,10 @@ def start_api_server():
     model_config = config['model_information']['model_config']
     vllm_config = config['model_information']['vllm_engine_config']
 
+    # Handle None vllm_config by using empty dict
+    if vllm_config is None:
+        vllm_config = {}
+
     # Set PyTorch CUDA memory allocator configuration if specified
     if "pytorch_cuda_alloc_conf" in vllm_config:
         os.environ["PYTORCH_CUDA_ALLOC_CONF"] = vllm_config["pytorch_cuda_alloc_conf"]
@@ -49,6 +53,15 @@ def start_api_server():
 
     if "gpu_memory_utilization" in vllm_config:
         cmd.extend(["--gpu-memory-utilization", str(vllm_config["gpu_memory_utilization"])])
+
+    if "tensor_parallel_size" in vllm_config:
+        cmd.extend(["--tensor-parallel-size", str(vllm_config["tensor_parallel_size"])])
+
+    if "tool_call_parser" in vllm_config:
+        cmd.extend(["--tool-call-parser", vllm_config["tool_call_parser"]])
+
+    if vllm_config.get("enable_auto_tool_choice", False):
+        cmd.append("--enable-auto-tool-choice")
 
     print("="*60)
     print("Starting vLLM OpenAI-Compatible API Server")

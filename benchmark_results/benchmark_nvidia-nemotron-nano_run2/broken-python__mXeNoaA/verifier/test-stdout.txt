@@ -1,7 +1,0 @@
-bash: cannot set terminal process group (-1): Inappropriate ioctl for device
-bash: no job control in this shell
-Traceback (most recent call last):
-  File "/usr/local/bin/pip", line 3, in <module>
-    from pip._internal.cli.main import main
-ModuleNotFoundError: No module named 'pip'
-/tests/test.sh: line 5: pytest: command not found
