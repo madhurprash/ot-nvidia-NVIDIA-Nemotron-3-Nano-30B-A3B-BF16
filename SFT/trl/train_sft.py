@@ -49,8 +49,8 @@ def load_model_and_tokenizer(config):
     model = Mistral3ForConditionalGeneration.from_pretrained(
         model_name,
         trust_remote_code=True,
-        torch_dtype=torch.bfloat16,     # or fp16
-        attn_implementation="eager",    # IMPORTANT (see below)
+        torch_dtype=torch.bfloat16,
+        attn_implementation=model_config['attn_implementation'],    # IMPORTANT (see below)
     )
     print("Model loaded from cache successfully!")
     return model, tokenizer

@@ -4,26 +4,17 @@
 # Model configuration
 model:
   name: "mistralai/Devstral-Small-2-24B-Instruct-2512"
-  max_seq_length: 4096  # Increased from 2048 for better context, but capped to avoid 13k+ token sequences
+  max_seq_length: 2048  # Increased from 2048 for better context, but capped to avoid 13k+ token sequences
   trust_remote_code: true
   torch_dtype: "bfloat16"
-  attn_implementation: "flash_attention_2"
+  attn_implementation: "flash_attention_2"  # Options: "eager", "flash_attention_2", etc.
   use_cache: false
-
-# Quantization configuration (reduces memory usage)
-# NOTE: Disabled because the model is already pre-quantized with FP8
-quantization:
-  enabled: false
-  load_in_4bit: true
-  bnb_4bit_compute_dtype: "bfloat16"
-  bnb_4bit_quant_type: "nf4"
-  bnb_4bit_use_double_quant: true
 
 # LoRA configuration for parameter-efficient fine-tuning
 lora:
   enabled: true
-  r: 16
-  lora_alpha: 32 # this is often set to 2 * r
+  r: 8
+  lora_alpha: 16 # this is often set to 2 * r
   lora_dropout: 0.05
   bias: "none"
   task_type: "CAUSAL_LM"
@@ -54,7 +45,7 @@ training:
     use_reentrant: false
 
   # Optimizer settings
-  max_steps: 1000
+  max_steps: 100
   optim: "adamw_8bit"
   learning_rate: 2.0e-5
   weight_decay: 0.01
@@ -84,5 +75,5 @@ training:
 
 # SFT specific settings
 sft:
-  max_seq_length: 4096  # Capped to avoid extremely long sequences (previously saw 13k+ tokens)
+  max_seq_length: 2048  # Capped to avoid extremely long sequences (previously saw 13k+ tokens)
   dataset_text_field: "text"  # Field after formatting
