@@ -52,9 +52,6 @@ def start_api_server():
     if "max_model_len" in vllm_config:
         cmd.extend(["--max-model-len", str(vllm_config["max_model_len"])])
 
-    if "quantization" in vllm_config:
-        cmd.extend(["--quantization", vllm_config["quantization"]])
-
     if "kv_cache_dtype" in vllm_config:
         cmd.extend(["--kv-cache-dtype", vllm_config["kv_cache_dtype"]])
 

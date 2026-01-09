@@ -28,7 +28,7 @@ model_information:
     # Enable automatic tool choice
     enable_auto_tool_choice: true
     # LoRA adapter configuration
-    enable_lora: true
+    enable_lora: false
     lora_modules:
       devstral-sft: "/home/ubuntu/devstral/benchmark-agentic-SLMs/SFT/trl/outputs/devstral-sft"
     max_loras: 1

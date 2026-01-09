@@ -4,8 +4,8 @@ from transformers import AutoTokenizer, Mistral3ForConditionalGeneration
 from peft import PeftModel
 
 BASE_MODEL = "mistralai/Devstral-Small-2-24B-Instruct-2512"
-LORA_DIR   = "/home/ubuntu/devstral/benchmark-agentic-SLMs/SFT/trl/outputs/devstral-sft"
-OUT_DIR    = "/home/ubuntu/devstral/merged-devstral-sft"
+LORA_DIR   = "/home/ubuntu/devstral-ft/benchmark-agentic-SLMs/Devstral-finetuned-versions/devstral-sft-updated-weightsv0.1"
+OUT_DIR    = "/home/ubuntu/devstral-ft/benchmark-agentic-SLMs/Devstral-finetuned-versions/merged-devstral-sft"
 
 os.makedirs(OUT_DIR, exist_ok=True)
 
@@ -23,18 +23,12 @@ base = Mistral3ForConditionalGeneration.from_pretrained(
 
 # Wrap with PEFT adapter
 peft_model = PeftModel.from_pretrained(base, LORA_DIR)
+peft_model = peft_model.to(torch.bfloat16)
 print("Wrapped type:", type(peft_model))
 print("Has merge_and_unload:", hasattr(peft_model, "merge_and_unload"))
 
 # Merge
 merged = peft_model.merge_and_unload()
-
-# Prevent Transformers from trying to "revert weight conversions" (fp8->bf16 path)
-for attr in ("_hf_weight_conversions", "_hf_weight_conversion"):
-    if hasattr(merged, attr):
-        setattr(merged, attr, [])
-    if hasattr(merged, "base_model") and hasattr(merged.base_model, attr):
-        setattr(merged.base_model, attr, [])
 
 # Save merged model
 merged.save_pretrained(OUT_DIR, safe_serialization=True)
