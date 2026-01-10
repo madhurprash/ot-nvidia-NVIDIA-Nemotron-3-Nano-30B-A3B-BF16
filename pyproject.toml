@@ -13,4 +13,5 @@ dependencies = [
     "peft",
     "trl",
     "tensorboard",
+    "bitsandbytes>=0.49.1",
 ]
