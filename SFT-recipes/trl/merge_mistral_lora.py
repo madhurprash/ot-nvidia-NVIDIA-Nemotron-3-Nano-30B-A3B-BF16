@@ -1,11 +1,13 @@
 import os
 import torch
-from transformers import AutoTokenizer, Mistral3ForConditionalGeneration
+from transformers import 
+    (AutoTokenizer, 
+     Mistral3ForConditionalGeneration)
 from peft import PeftModel
 
 BASE_MODEL = "mistralai/Devstral-Small-2-24B-Instruct-2512"
-LORA_DIR   = "/home/ubuntu/finetuning/benchmark-agentic-SLMs/Devstral-finetuned-versions/devstral-sft-updated-weightsv0.1"
-OUT_DIR    = "/home/ubuntu/finetuning/benchmark-agentic-SLMs/Devstral-finetuned-versions/merged-devstral-sft"
+LORA_DIR   = "/home/ubuntu/finetuning/benchmark-agentic-SLMs/SFT/trl/outputs/devstral-sft"
+OUT_DIR    = "/home/ubuntu/finetuning/benchmark-agentic-SLMs/SFT/trl/outputs/merged-devstral-sft"
 
 os.makedirs(OUT_DIR, exist_ok=True)
 

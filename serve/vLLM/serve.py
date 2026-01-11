@@ -1,7 +1,8 @@
 """
-vLLM OpenAI-Compatible API Server for any vLLM-supported model
+vLLM OpenAI-Compatible API Server with LoRA adapter support
 
 This script starts an OpenAI-compatible API server using vLLM.
+It supports serving base models or merged LoRA adapters.
 The server will be accessible at http://localhost:8000
 Configuration is loaded from config.yaml
 """
@@ -9,6 +10,7 @@ import os
 import subprocess
 import sys
 from utils import load_config
+
 
 def start_api_server():
     """Start the vLLM OpenAI-compatible API server."""
@@ -61,6 +63,9 @@ def start_api_server():
     if "tensor_parallel_size" in vllm_config:
         cmd.extend(["--tensor-parallel-size", str(vllm_config["tensor_parallel_size"])])
 
+    if "tokenizer_mode" in vllm_config:
+        cmd.extend(["--tokenizer-mode", vllm_config["tokenizer_mode"]])
+
     if "tool_call_parser" in vllm_config:
         cmd.extend(["--tool-call-parser", vllm_config["tool_call_parser"]])
 
@@ -102,6 +107,7 @@ def start_api_server():
     except Exception as e:
         print(f"\nError starting server: {e}")
         sys.exit(1)
+
 
 if __name__ == "__main__":
     start_api_server()

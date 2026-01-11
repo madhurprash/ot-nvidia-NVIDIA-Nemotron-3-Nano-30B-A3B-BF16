@@ -1,6 +1,6 @@
 general:
   name: "agentic-SLM-vllm-deployment"
-  description: "vLLM deployment configuration for Agentic SLM models"
+  description: "vLLM deployment configuration for Agentic SLM models with LoRA support"
 
 # Model information and configuration
 model_information:
@@ -9,9 +9,7 @@ model_information:
     # Whether to load model from local path (true) or HuggingFace Hub (false)
     is_model_local: false
     # Model identifier from HuggingFace (used when is_model_local is false)
-    model_id: "devstral-sft"
-    # Local model path (used when is_model_local is true)
-    model_path: ""
+    model_id: "mistralai/Devstral-Small-2-24B-Instruct-2512"
     # Trust remote code execution
     trust_remote_code: true
     # Data type for model weights (auto, float16, bfloat16, etc.)
@@ -23,16 +21,26 @@ model_information:
     max_model_len: 32768
     # Tensor parallel size for multi-GPU deployment
     tensor_parallel_size: 8
+    # Tokenizer mode (use "mistral" for Mistral models)
+    tokenizer_mode: "mistral"
     # Tool call parser for function calling support
     tool_call_parser: "mistral"
     # Enable automatic tool choice
     enable_auto_tool_choice: true
     # LoRA adapter configuration
-    enable_lora: false
+    enable_lora: true
+    # LoRA modules can be specified as:
+    # 1. Local path: "/path/to/adapter"
+    # 2. HuggingFace repo: "username/repo-name"
     lora_modules:
-      devstral-sft: "/home/ubuntu/devstral/benchmark-agentic-SLMs/SFT/trl/outputs/devstral-sft"
+      # Example with local path
+      # devstral-sft-local: "provide-your-local-path-here"
+      # Example with HuggingFace repo
+      devstral-sft-hf: "Madhurprash/Devstral-Small-2-24B-Instruct-2512-SFT-LoRA-OpenThoughts"
+    # Maximum number of LoRA adapters that can be used concurrently
     max_loras: 1
-    max_lora_rank: 8
+    # Maximum rank of the LoRA adapters (should match or exceed your adapter's rank)
+    max_lora_rank: 16
 
   # Default inference parameters for generation
   inference_parameters:
@@ -46,6 +54,6 @@ lora_merge:
   # Base model to merge adapter with
   base_model: "mistralai/Devstral-Small-2-24B-Instruct-2512"
   # Path to the LoRA adapter directory
-  adapter_path: "/home/ubuntu/devstral/benchmark-agentic-SLMs/SFT/trl/outputs/devstral-sft"
+  adapter_path: "/home/ubuntu/finetuning/benchmark-agentic-SLMs/SFT/trl/outputs/devstral-sft"
   # Output path for merged model
-  output_path: "/home/ubuntu/devstral/benchmark-agentic-SLMs/SFT/trl/outputs/devstral-sft-merged"
+  output_path: "/home/ubuntu/finetuning/benchmark-agentic-SLMs/SFT/trl/outputs/merged-devstral-sft"
