@@ -1,0 +1,96 @@
+{
+    "id": "5cea0e92-7585-4c6a-999c-f237822f69b4",
+    "task_name": "sqlite-db-truncate",
+    "trial_name": "sqlite-db-truncate__rQUreVw",
+    "trial_uri": "file:///home/ubuntu/finetuning/benchmark-agentic-SLMs/benchmarks/terminal_bench/terminalbench-20260111-224952/tbench_devstral-sft-lora/sqlite-db-truncate__rQUreVw",
+    "task_id": {
+        "git_url": "https://github.com/laude-institute/terminal-bench-2.git",
+        "git_commit_id": "69671fbaac6d67a7ef0dfec016cc38a64ef7a77c",
+        "path": "sqlite-db-truncate"
+    },
+    "source": "terminal-bench",
+    "task_checksum": "2346f11dbe5b7bad30e9a9bcb27e5276a73f324d62c452d898e4ce0e472583b1",
+    "config": {
+        "task": {
+            "path": "sqlite-db-truncate",
+            "git_url": "https://github.com/laude-institute/terminal-bench-2.git",
+            "git_commit_id": "69671fbaac6d67a7ef0dfec016cc38a64ef7a77c",
+            "overwrite": false,
+            "download_dir": null,
+            "source": "terminal-bench"
+        },
+        "trial_name": "sqlite-db-truncate__rQUreVw",
+        "trials_dir": "terminalbench-20260111-224952/tbench_devstral-sft-lora",
+        "timeout_multiplier": 1.0,
+        "agent": {
+            "name": null,
+            "import_path": "custom_harbor_external_agent:VLLMAgent",
+            "model_name": "devstral-sft-hf",
+            "override_timeout_sec": null,
+            "override_setup_timeout_sec": null,
+            "max_timeout_sec": null,
+            "kwargs": {
+                "api_base": "http://localhost:8000/v1"
+            }
+        },
+        "environment": {
+            "type": "docker",
+            "import_path": null,
+            "force_build": false,
+            "delete": true,
+            "override_cpus": null,
+            "override_memory_mb": null,
+            "override_storage_mb": null,
+            "override_gpus": null,
+            "kwargs": {}
+        },
+        "verifier": {
+            "override_timeout_sec": null,
+            "max_timeout_sec": null,
+            "disable": false
+        },
+        "job_id": "43ae7f5e-8e8e-45e0-a98a-a50df5bccc9d"
+    },
+    "agent_info": {
+        "name": "vllm-agent",
+        "version": "2.0.0",
+        "model_info": null
+    },
+    "agent_result": {
+        "n_input_tokens": null,
+        "n_cache_tokens": null,
+        "n_output_tokens": null,
+        "cost_usd": null,
+        "rollout_details": null,
+        "metadata": {
+            "iterations": 1,
+            "conversation_length": 3,
+            "status": "completed_with_signal",
+            "task_complete_signal": true
+        }
+    },
+    "verifier_result": {
+        "rewards": {
+            "reward": 0.0
+        }
+    },
+    "exception_info": null,
+    "started_at": "2026-01-12T02:07:36.066408",
+    "finished_at": "2026-01-12T02:08:08.663395",
+    "environment_setup": {
+        "started_at": "2026-01-12T02:07:36.067059",
+        "finished_at": "2026-01-12T02:07:37.342464"
+    },
+    "agent_setup": {
+        "started_at": "2026-01-12T02:07:37.342473",
+        "finished_at": "2026-01-12T02:07:37.352729"
+    },
+    "agent_execution": {
+        "started_at": "2026-01-12T02:07:37.352752",
+        "finished_at": "2026-01-12T02:07:52.221510"
+    },
+    "verifier": {
+        "started_at": "2026-01-12T02:07:52.221565",
+        "finished_at": "2026-01-12T02:07:58.240694"
+    }
+}

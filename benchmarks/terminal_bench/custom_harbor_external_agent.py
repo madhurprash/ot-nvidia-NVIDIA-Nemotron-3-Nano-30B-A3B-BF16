@@ -27,8 +27,10 @@ class VLLMAgent(BaseAgent):
         model_name: Optional[str] = None,
         logger = None,
         api_base: str = "http://localhost:8000/v1",
-        temperature: float = 0.1,
+        temperature: float = 0.7,
         max_tokens: int = 8192,
+        repetition_penalty: float = 1.1,
+        top_p: float = 0.95,
         **kwargs,
     ):
         """
@@ -62,6 +64,8 @@ class VLLMAgent(BaseAgent):
         self.api_base = api_base
         self.temperature = temperature
         self.max_tokens = max_tokens
+        self.repetition_penalty = repetition_penalty
+        self.top_p = top_p
 
         # Initialize OpenAI client pointing to local vLLM server
         self.client = AsyncOpenAI(
@@ -148,7 +152,7 @@ Your current working directory is:
 ## Core Guidelines:
 1. **Action-Oriented**: Focus on executing commands to complete the task rather than providing explanations
 2. **Iterative Problem-Solving**: Break down complex tasks into manageable steps
-3. **Command Execution**: Provide bash commands in ```bash code blocks for execution
+3. **Command Execution**: ALWAYS provide bash commands in ```bash code blocks for execution
 4. **Result Analysis**: Carefully analyze command outputs to determine next steps
 5. **Error Handling**: If a command fails, analyze the error and adapt your approach
 6. **Task Completion**: When the task is fully complete, explicitly state "TASK COMPLETE"
@@ -160,9 +164,19 @@ Your current working directory is:
 - Track your progress towards task completion
 - Be concise and direct in your responses
 
-## Task Completion:
+## CRITICAL: Avoid Verification Loops
+**DO NOT get stuck repeating the same verification commands:**
+- Once you verify a file exists or contains correct content, move forward to the next step
+- Do NOT repeatedly check the same thing (e.g., `cat file.txt` 100+ times)
+- If you've verified something works, trust that result and proceed
+- Keep mental track of what you've already checked to avoid redundant verification
+- If a verification passes, that step is DONE - move to the next task requirement
+
+## Task Completion Recognition:
 - Complete the given task following the instructions precisely
-- Once you've verified the task is complete, respond with "TASK COMPLETE"
+- Once you've created/verified all required outputs, immediately say "TASK COMPLETE"
+- Do NOT keep verifying after the task is done
+- Trust your verification results - if the output matches requirements, you're finished
 - Do not provide unnecessary explanations unless specifically asked
 
 Remember: Your goal is to complete the task efficiently through terminal commands."""
@@ -242,6 +256,10 @@ Remember: Your goal is to complete the task efficiently through terminal command
                     messages=messages,
                     temperature=self.temperature,
                     max_tokens=self.max_tokens,
+                    extra_body={
+                        "repetition_penalty": self.repetition_penalty,
+                        "top_p": self.top_p,
+                    }
                 )
 
                 assistant_message = response.choices[0].message.content
@@ -276,7 +294,7 @@ Remember: Your goal is to complete the task efficiently through terminal command
                     print("\nNo commands found. Asking agent to proceed...")
                     messages.append({
                         "role": "user",
-                        "content": "No bash commands detected. Based on the task description, If the task is complete, say 'TASK COMPLETE'. Otherwise, provide the next bash command to execute. Do not stop until the task is fully and correctly completed."
+                        "content": "No bash commands detected in your response. You MUST provide commands in ```bash code blocks.\n\nBased on the task description:\n- If the task is complete and verified, respond with ONLY: 'TASK COMPLETE'\n- Otherwise, provide your next bash command in a ```bash code block\n- Do NOT just describe what you would do - actually write the bash command\n- Do NOT repeat commands you've already run unless you have a specific reason\n\nRemember: Do not stop until the task is fully and correctly completed."
                     })
                     continue
 
@@ -312,7 +330,7 @@ Remember: Your goal is to complete the task efficiently through terminal command
 
                 # Send all command results back to the model for reflection
                 combined_feedback = "\n---\n".join(all_outputs)
-                combined_feedback += "\n\nBased on these results, what should you do next? If the task is complete, say 'TASK COMPLETE'."
+                combined_feedback += "\n\nBased on these results:\n- If this completes all task requirements, respond with 'TASK COMPLETE'\n- If more steps are needed, provide the NEXT command (do NOT repeat what you just did)\n- Do NOT verify the same thing again unless there was an error\n- Move forward with the next logical step"
 
                 messages.append({
                     "role": "user",

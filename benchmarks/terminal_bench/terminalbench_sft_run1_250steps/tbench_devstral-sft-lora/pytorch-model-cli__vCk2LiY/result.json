@@ -1,0 +1,96 @@
+{
+    "id": "23ae6ad5-0e3a-4b11-ac89-806e521b0805",
+    "task_name": "pytorch-model-cli",
+    "trial_name": "pytorch-model-cli__vCk2LiY",
+    "trial_uri": "file:///home/ubuntu/finetuning/benchmark-agentic-SLMs/benchmarks/terminal_bench/terminalbench-20260111-224952/tbench_devstral-sft-lora/pytorch-model-cli__vCk2LiY",
+    "task_id": {
+        "git_url": "https://github.com/laude-institute/terminal-bench-2.git",
+        "git_commit_id": "69671fbaac6d67a7ef0dfec016cc38a64ef7a77c",
+        "path": "pytorch-model-cli"
+    },
+    "source": "terminal-bench",
+    "task_checksum": "3dc849266b8ddcd8463440e2bceeb2a603e583042fe5874ee82f6d85230601c7",
+    "config": {
+        "task": {
+            "path": "pytorch-model-cli",
+            "git_url": "https://github.com/laude-institute/terminal-bench-2.git",
+            "git_commit_id": "69671fbaac6d67a7ef0dfec016cc38a64ef7a77c",
+            "overwrite": false,
+            "download_dir": null,
+            "source": "terminal-bench"
+        },
+        "trial_name": "pytorch-model-cli__vCk2LiY",
+        "trials_dir": "terminalbench-20260111-224952/tbench_devstral-sft-lora",
+        "timeout_multiplier": 1.0,
+        "agent": {
+            "name": null,
+            "import_path": "custom_harbor_external_agent:VLLMAgent",
+            "model_name": "devstral-sft-hf",
+            "override_timeout_sec": null,
+            "override_setup_timeout_sec": null,
+            "max_timeout_sec": null,
+            "kwargs": {
+                "api_base": "http://localhost:8000/v1"
+            }
+        },
+        "environment": {
+            "type": "docker",
+            "import_path": null,
+            "force_build": false,
+            "delete": true,
+            "override_cpus": null,
+            "override_memory_mb": null,
+            "override_storage_mb": null,
+            "override_gpus": null,
+            "kwargs": {}
+        },
+        "verifier": {
+            "override_timeout_sec": null,
+            "max_timeout_sec": null,
+            "disable": false
+        },
+        "job_id": "43ae7f5e-8e8e-45e0-a98a-a50df5bccc9d"
+    },
+    "agent_info": {
+        "name": "vllm-agent",
+        "version": "2.0.0",
+        "model_info": null
+    },
+    "agent_result": {
+        "n_input_tokens": null,
+        "n_cache_tokens": null,
+        "n_output_tokens": null,
+        "cost_usd": null,
+        "rollout_details": null,
+        "metadata": {
+            "iterations": 10,
+            "conversation_length": 21,
+            "status": "completed_with_signal",
+            "task_complete_signal": true
+        }
+    },
+    "verifier_result": {
+        "rewards": {
+            "reward": 0.0
+        }
+    },
+    "exception_info": null,
+    "started_at": "2026-01-11T22:56:36.293832",
+    "finished_at": "2026-01-11T23:05:54.457343",
+    "environment_setup": {
+        "started_at": "2026-01-11T22:56:36.296180",
+        "finished_at": "2026-01-11T22:57:50.146974"
+    },
+    "agent_setup": {
+        "started_at": "2026-01-11T22:57:50.146994",
+        "finished_at": "2026-01-11T22:57:50.158701"
+    },
+    "agent_execution": {
+        "started_at": "2026-01-11T22:57:50.158723",
+        "finished_at": "2026-01-11T22:59:10.734774"
+    },
+    "verifier": {
+        "started_at": "2026-01-11T22:59:10.734912",
+        "finished_at": "2026-01-11T23:01:12.234092"
+    }
+}

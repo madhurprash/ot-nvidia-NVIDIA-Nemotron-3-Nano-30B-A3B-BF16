@@ -1,0 +1,96 @@
+{
+    "id": "670c1a69-dd5f-4842-a1f7-afb6a2d17e04",
+    "task_name": "pytorch-model-recovery",
+    "trial_name": "pytorch-model-recovery__ZLQMfUG",
+    "trial_uri": "file:///home/ubuntu/finetuning/benchmark-agentic-SLMs/benchmarks/terminal_bench/terminalbench-20260111-224952/tbench_devstral-sft-lora/pytorch-model-recovery__ZLQMfUG",
+    "task_id": {
+        "git_url": "https://github.com/laude-institute/terminal-bench-2.git",
+        "git_commit_id": "69671fbaac6d67a7ef0dfec016cc38a64ef7a77c",
+        "path": "pytorch-model-recovery"
+    },
+    "source": "terminal-bench",
+    "task_checksum": "9def2a29a9f98ee4ae428cc23e473a889f9f4fd87a62ea685a04192a6aefe20f",
+    "config": {
+        "task": {
+            "path": "pytorch-model-recovery",
+            "git_url": "https://github.com/laude-institute/terminal-bench-2.git",
+            "git_commit_id": "69671fbaac6d67a7ef0dfec016cc38a64ef7a77c",
+            "overwrite": false,
+            "download_dir": null,
+            "source": "terminal-bench"
+        },
+        "trial_name": "pytorch-model-recovery__ZLQMfUG",
+        "trials_dir": "terminalbench-20260111-224952/tbench_devstral-sft-lora",
+        "timeout_multiplier": 1.0,
+        "agent": {
+            "name": null,
+            "import_path": "custom_harbor_external_agent:VLLMAgent",
+            "model_name": "devstral-sft-hf",
+            "override_timeout_sec": null,
+            "override_setup_timeout_sec": null,
+            "max_timeout_sec": null,
+            "kwargs": {
+                "api_base": "http://localhost:8000/v1"
+            }
+        },
+        "environment": {
+            "type": "docker",
+            "import_path": null,
+            "force_build": false,
+            "delete": true,
+            "override_cpus": null,
+            "override_memory_mb": null,
+            "override_storage_mb": null,
+            "override_gpus": null,
+            "kwargs": {}
+        },
+        "verifier": {
+            "override_timeout_sec": null,
+            "max_timeout_sec": null,
+            "disable": false
+        },
+        "job_id": "43ae7f5e-8e8e-45e0-a98a-a50df5bccc9d"
+    },
+    "agent_info": {
+        "name": "vllm-agent",
+        "version": "2.0.0",
+        "model_info": null
+    },
+    "agent_result": {
+        "n_input_tokens": null,
+        "n_cache_tokens": null,
+        "n_output_tokens": null,
+        "cost_usd": null,
+        "rollout_details": null,
+        "metadata": {
+            "iterations": 17,
+            "conversation_length": 35,
+            "status": "completed_with_signal",
+            "task_complete_signal": true
+        }
+    },
+    "verifier_result": {
+        "rewards": {
+            "reward": 0.0
+        }
+    },
+    "exception_info": null,
+    "started_at": "2026-01-12T01:56:51.207238",
+    "finished_at": "2026-01-12T02:04:17.952843",
+    "environment_setup": {
+        "started_at": "2026-01-12T01:56:51.233460",
+        "finished_at": "2026-01-12T01:59:38.554654"
+    },
+    "agent_setup": {
+        "started_at": "2026-01-12T01:59:38.554669",
+        "finished_at": "2026-01-12T01:59:38.564261"
+    },
+    "agent_execution": {
+        "started_at": "2026-01-12T01:59:38.564289",
+        "finished_at": "2026-01-12T02:02:07.519420"
+    },
+    "verifier": {
+        "started_at": "2026-01-12T02:02:07.519592",
+        "finished_at": "2026-01-12T02:04:05.566088"
+    }
+}

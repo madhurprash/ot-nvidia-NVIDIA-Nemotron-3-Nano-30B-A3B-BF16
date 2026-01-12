@@ -1,0 +1,96 @@
+{
+    "id": "f00d4954-a659-4c2c-acfc-496051117ad7",
+    "task_name": "path-tracing-reverse",
+    "trial_name": "path-tracing-reverse__4QQoLsC",
+    "trial_uri": "file:///home/ubuntu/finetuning/benchmark-agentic-SLMs/benchmarks/terminal_bench/terminalbench-20260111-224952/tbench_devstral-sft-lora/path-tracing-reverse__4QQoLsC",
+    "task_id": {
+        "git_url": "https://github.com/laude-institute/terminal-bench-2.git",
+        "git_commit_id": "69671fbaac6d67a7ef0dfec016cc38a64ef7a77c",
+        "path": "path-tracing-reverse"
+    },
+    "source": "terminal-bench",
+    "task_checksum": "93852df3e66fe6e3b04e1f1039b06b03d5b1a36787e876a094d6c9011653ffae",
+    "config": {
+        "task": {
+            "path": "path-tracing-reverse",
+            "git_url": "https://github.com/laude-institute/terminal-bench-2.git",
+            "git_commit_id": "69671fbaac6d67a7ef0dfec016cc38a64ef7a77c",
+            "overwrite": false,
+            "download_dir": null,
+            "source": "terminal-bench"
+        },
+        "trial_name": "path-tracing-reverse__4QQoLsC",
+        "trials_dir": "terminalbench-20260111-224952/tbench_devstral-sft-lora",
+        "timeout_multiplier": 1.0,
+        "agent": {
+            "name": null,
+            "import_path": "custom_harbor_external_agent:VLLMAgent",
+            "model_name": "devstral-sft-hf",
+            "override_timeout_sec": null,
+            "override_setup_timeout_sec": null,
+            "max_timeout_sec": null,
+            "kwargs": {
+                "api_base": "http://localhost:8000/v1"
+            }
+        },
+        "environment": {
+            "type": "docker",
+            "import_path": null,
+            "force_build": false,
+            "delete": true,
+            "override_cpus": null,
+            "override_memory_mb": null,
+            "override_storage_mb": null,
+            "override_gpus": null,
+            "kwargs": {}
+        },
+        "verifier": {
+            "override_timeout_sec": null,
+            "max_timeout_sec": null,
+            "disable": false
+        },
+        "job_id": "43ae7f5e-8e8e-45e0-a98a-a50df5bccc9d"
+    },
+    "agent_info": {
+        "name": "vllm-agent",
+        "version": "2.0.0",
+        "model_info": null
+    },
+    "agent_result": {
+        "n_input_tokens": null,
+        "n_cache_tokens": null,
+        "n_output_tokens": null,
+        "cost_usd": null,
+        "rollout_details": null,
+        "metadata": {
+            "iterations": 24,
+            "conversation_length": 49,
+            "status": "completed_with_signal",
+            "task_complete_signal": true
+        }
+    },
+    "verifier_result": {
+        "rewards": {
+            "reward": 0.0
+        }
+    },
+    "exception_info": null,
+    "started_at": "2026-01-12T02:55:04.563563",
+    "finished_at": "2026-01-12T03:03:04.558665",
+    "environment_setup": {
+        "started_at": "2026-01-12T02:55:04.564242",
+        "finished_at": "2026-01-12T02:56:04.545846"
+    },
+    "agent_setup": {
+        "started_at": "2026-01-12T02:56:04.545855",
+        "finished_at": "2026-01-12T02:56:04.554129"
+    },
+    "agent_execution": {
+        "started_at": "2026-01-12T02:56:04.554146",
+        "finished_at": "2026-01-12T03:02:12.124496"
+    },
+    "verifier": {
+        "started_at": "2026-01-12T03:02:12.124553",
+        "finished_at": "2026-01-12T03:02:23.172636"
+    }
+}

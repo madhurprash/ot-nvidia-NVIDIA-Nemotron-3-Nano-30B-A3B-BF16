@@ -1,0 +1,79 @@
+# Training configuration for Devstral-Small-2-24B fine-tuning
+# Reference: https://huggingface.co/docs/trl/en/sft_trainer
+
+# Model configuration
+model:
+  name: "mistralai/Devstral-Small-2-24B-Instruct-2512"
+  max_seq_length: 4096  # Increased from 2048 for better context, but capped to avoid 13k+ token sequences
+  trust_remote_code: true
+  torch_dtype: "bfloat16"
+  attn_implementation: "flash_attention_2"  # Options: "eager", "flash_attention_2", etc.
+  use_cache: false
+
+# LoRA configuration for parameter-efficient fine-tuning
+lora:
+  enabled: true
+  r: 8
+  lora_alpha: 16 # this is often set to 2 * r
+  lora_dropout: 0.05
+  bias: "none"
+  task_type: "CAUSAL_LM"
+  target_modules:
+    - "q_proj"
+    - "k_proj"
+    - "v_proj"
+    - "o_proj"
+    - "gate_proj"
+    - "up_proj"
+    - "down_proj"
+
+# Dataset configuration
+dataset:
+  name: "open-thoughts/OpenThoughts-Agent-v1-SFT"
+  config: "default"
+  split: "train"
+  num_train_samples: null  # Set to a number to limit training samples for debugging
+
+# Training arguments
+training:
+  output_dir: "./outputs/devstral-sft"
+  num_train_epochs: 1
+  per_device_train_batch_size: 2
+  gradient_accumulation_steps: 8
+  gradient_checkpointing: true
+  gradient_checkpointing_kwargs:
+    use_reentrant: false
+
+  # Optimizer settings
+  max_steps: 250
+  optim: "adamw_8bit"
+  learning_rate: 2.0e-5
+  weight_decay: 0.01
+  warmup_ratio: 0.03
+  lr_scheduler_type: "cosine"
+  ddp_find_unused_parameters: false  # Optimize DDP memory usage
+
+  # Logging and saving
+  logging_steps: 10
+  save_strategy: "steps"
+  save_steps: 500
+  save_total_limit: 2
+
+  # Mixed precision training
+  bf16: true
+  fp16: false
+
+  # Other settings
+  max_grad_norm: 1.0
+  seed: 42
+  dataloader_num_workers: 4
+  remove_unused_columns: false
+
+  # Reporting
+  report_to: "tensorboard"
+  logging_dir: "./logs"
+
+# SFT specific settings
+sft:
+  max_seq_length: 4096  # Capped to avoid extremely long sequences (previously saw 13k+ tokens)
+  dataset_text_field: "text"  # Field after formatting

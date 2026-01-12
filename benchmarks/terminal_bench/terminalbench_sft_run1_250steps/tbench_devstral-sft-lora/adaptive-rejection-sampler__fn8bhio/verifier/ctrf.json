@@ -1,0 +1,107 @@
+{
+    "results": {
+        "tool": {
+            "name": "pytest",
+            "version": "8.4.1"
+        },
+        "summary": {
+            "tests": 9,
+            "passed": 7,
+            "failed": 2,
+            "skipped": 0,
+            "pending": 0,
+            "other": 0,
+            "start": 1768175539.5561774,
+            "stop": 1768175602.1449075
+        },
+        "tests": [
+            {
+                "name": "test_outputs.py::test_ars_function_exists",
+                "status": "passed",
+                "duration": 0.0006309559685178101,
+                "start": 1768175540.4268062,
+                "stop": 1768175540.4276893,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_can_generate_standard_distribution_samples",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 0.5268669990473427,
+                "start": 1768175540.427897,
+                "stop": 1768175541.0299606,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_can_generate_standard_distribution_samples():\n        \"\"\"Test implementation can generate samples from standard distributions.\"\"\"\n        app_dir = Path(\"/app\")\n    \n        # Test R implementation by sourcing ars.R and running tests\n        test_code_r = \"\"\"\n    library(stats)\n    \n    # Source the required ars.R file\n    source(\"ars.R\")\n    \n    # Test normal distribution sampling\n    normal_density <- function(x) {\n        dnorm(x, mean = 0, sd = 1)\n    }\n    \n    # Try to generate samples\n    tryCatch({\n        samples <- ars(normal_density, c(-5, 5), n = 1000)\n    \n        if (length(samples) >= 900) {  # Allow some tolerance\n            mean_val <- mean(samples)\n            std_val <- sd(samples)\n    \n            if (abs(mean_val) < 0.2 && std_val > 0.8 && std_val < 1.2) {\n                cat(\"PASS: Generated valid normal samples\\n\")\n            } else {\n                cat(\"ERROR: Mean or std out of range\\n\")\n            }\n        } else {\n            cat(\"ERROR: Insufficient samples generated\\n\")\n        }\n    }, error = function(e) {\n        cat(\"ERROR: Failed to generate samples:\", conditionMessage(e), \"\\n\")\n    })\n    \"\"\"\n    \n        # Run R test\n        test_file = app_dir / \"test_normal_sampler.R\"\n        test_file.write_text(test_code_r)\n        try:\n            result = subprocess.run(\n                [\"Rscript\", str(test_file)],\n                capture_output=True,\n                text=True,\n                cwd=str(app_dir),\n                timeout=30,\n            )\n            output = result.stdout + result.stderr\n>           assert \"PASS\" in output, (\n                f\"Failed to generate valid normal samples. Output: {output}\"\n            )\nE           AssertionError: Failed to generate valid normal samples. Output: ERROR: Mean or std out of range\nE             There were 12 warnings (use warnings() to see them)\nE             \nE           assert 'PASS' in 'ERROR: Mean or std out of range\\nThere were 12 warnings (use warnings() to see them)\\n'\n\n/tests/test_outputs.py:81: AssertionError",
+                "message": "The test failed in the call phase due to an assertion error"
+            },
+            {
+                "name": "test_outputs.py::test_has_test_function",
+                "status": "passed",
+                "duration": 0.0008840970112942159,
+                "start": 1768175541.0302134,
+                "stop": 1768175541.0312476,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_formal_testing_with_known_truth",
+                "status": "failed",
+                "raw_status": "call_failed",
+                "duration": 60.099263889016584,
+                "start": 1768175541.0314186,
+                "stop": 1768175601.2286322,
+                "retries": 0,
+                "file_path": "test_outputs.py",
+                "trace": "def test_formal_testing_with_known_truth():\n        \"\"\"Test that formal testing outputs correct format as specified.\"\"\"\n        app_dir = Path(\"/app\")\n    \n        # Run the test function and check output format\n        test_code = \"\"\"\n    source(\"ars.R\")\n    # Run the test function if it exists\n    if (exists(\"test\")) {\n        test()\n    } else {\n        cat(\"ERROR: test function not found\\n\")\n    }\n    \"\"\"\n    \n        test_file = app_dir / \"run_test.R\"\n        test_file.write_text(test_code)\n        try:\n>           result = subprocess.run(\n                [\"Rscript\", str(test_file)],\n                capture_output=True,\n                text=True,\n                cwd=str(app_dir),\n                timeout=60,\n            )\n\n/tests/test_outputs.py:131: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n/root/.local/share/uv/python/cpython-3.13.9-linux-x86_64-gnu/lib/python3.13/subprocess.py:556: in run\n    stdout, stderr = process.communicate(input, timeout=timeout)\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n/root/.local/share/uv/python/cpython-3.13.9-linux-x86_64-gnu/lib/python3.13/subprocess.py:1222: in communicate\n    stdout, stderr = self._communicate(input, endtime, timeout)\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n/root/.local/share/uv/python/cpython-3.13.9-linux-x86_64-gnu/lib/python3.13/subprocess.py:2129: in _communicate\n    self._check_timeout(endtime, orig_timeout, stdout, stderr)\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = <Popen: returncode: -9 args: ['Rscript', '/app/run_test.R']>\nendtime = 381401.601396878, orig_timeout = 60\nstdout_seq = [b'\\n=== ADAPTIVE REJECTION SAMPLER TESTS ===\\n\\nTest 1: Standard Normal Distribution\\n', b'Mean: -0.0014, SD: 0.9662,...b'Mean: 0.0936, SD: 0.4387\\nTEST_2_EXPONENTIAL_DISTRIBUTION: FAIL\\n\\nTest 3: Beta Distribution (shape1=2, shape2=5)\\n']\nstderr_seq = [], skip_check_and_raise = False\n\n    def _check_timeout(self, endtime, orig_timeout, stdout_seq, stderr_seq,\n                       skip_check_and_raise=False):\n        \"\"\"Convenience for checking if a timeout has expired.\"\"\"\n        if endtime is None:\n            return\n        if skip_check_and_raise or _time() > endtime:\n>           raise TimeoutExpired(\n                    self.args, orig_timeout,\n                    output=b''.join(stdout_seq) if stdout_seq else None,\n                    stderr=b''.join(stderr_seq) if stderr_seq else None)\nE           subprocess.TimeoutExpired: Command '['Rscript', '/app/run_test.R']' timed out after 60 seconds\n\n/root/.local/share/uv/python/cpython-3.13.9-linux-x86_64-gnu/lib/python3.13/subprocess.py:1269: TimeoutExpired",
+                "message": "The test failed in the call phase"
+            },
+            {
+                "name": "test_outputs.py::test_sample_files_generated",
+                "status": "passed",
+                "duration": 0.00770517997443676,
+                "start": 1768175601.2288806,
+                "stop": 1768175601.2367547,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_implementation_is_modular",
+                "status": "passed",
+                "duration": 0.0006051709642633796,
+                "start": 1768175601.2369745,
+                "stop": 1768175601.237711,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_implementation_handles_errors",
+                "status": "passed",
+                "duration": 0.0004616799997165799,
+                "start": 1768175601.2378855,
+                "stop": 1768175601.2384706,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_input_validation_functionality",
+                "status": "passed",
+                "duration": 0.40920474304584786,
+                "start": 1768175601.238619,
+                "stop": 1768175601.648055,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            },
+            {
+                "name": "test_outputs.py::test_log_concavity_functionality",
+                "status": "passed",
+                "duration": 0.49619015300413594,
+                "start": 1768175601.648287,
+                "stop": 1768175602.144667,
+                "retries": 0,
+                "file_path": "test_outputs.py"
+            }
+        ]
+    }
+}

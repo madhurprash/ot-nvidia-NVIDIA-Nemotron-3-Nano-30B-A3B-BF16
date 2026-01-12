@@ -1,0 +1,96 @@
+{
+    "id": "ed69594e-0545-4b59-b25f-9e2854630867",
+    "task_name": "portfolio-optimization",
+    "trial_name": "portfolio-optimization__zdKgvHf",
+    "trial_uri": "file:///home/ubuntu/finetuning/benchmark-agentic-SLMs/benchmarks/terminal_bench/terminalbench-20260111-224952/tbench_devstral-sft-lora/portfolio-optimization__zdKgvHf",
+    "task_id": {
+        "git_url": "https://github.com/laude-institute/terminal-bench-2.git",
+        "git_commit_id": "69671fbaac6d67a7ef0dfec016cc38a64ef7a77c",
+        "path": "portfolio-optimization"
+    },
+    "source": "terminal-bench",
+    "task_checksum": "da8a95d2c518a70ef66e47f3571fffd3f9172334c1c24e01d9ee232bdebd428c",
+    "config": {
+        "task": {
+            "path": "portfolio-optimization",
+            "git_url": "https://github.com/laude-institute/terminal-bench-2.git",
+            "git_commit_id": "69671fbaac6d67a7ef0dfec016cc38a64ef7a77c",
+            "overwrite": false,
+            "download_dir": null,
+            "source": "terminal-bench"
+        },
+        "trial_name": "portfolio-optimization__zdKgvHf",
+        "trials_dir": "terminalbench-20260111-224952/tbench_devstral-sft-lora",
+        "timeout_multiplier": 1.0,
+        "agent": {
+            "name": null,
+            "import_path": "custom_harbor_external_agent:VLLMAgent",
+            "model_name": "devstral-sft-hf",
+            "override_timeout_sec": null,
+            "override_setup_timeout_sec": null,
+            "max_timeout_sec": null,
+            "kwargs": {
+                "api_base": "http://localhost:8000/v1"
+            }
+        },
+        "environment": {
+            "type": "docker",
+            "import_path": null,
+            "force_build": false,
+            "delete": true,
+            "override_cpus": null,
+            "override_memory_mb": null,
+            "override_storage_mb": null,
+            "override_gpus": null,
+            "kwargs": {}
+        },
+        "verifier": {
+            "override_timeout_sec": null,
+            "max_timeout_sec": null,
+            "disable": false
+        },
+        "job_id": "43ae7f5e-8e8e-45e0-a98a-a50df5bccc9d"
+    },
+    "agent_info": {
+        "name": "vllm-agent",
+        "version": "2.0.0",
+        "model_info": null
+    },
+    "agent_result": {
+        "n_input_tokens": null,
+        "n_cache_tokens": null,
+        "n_output_tokens": null,
+        "cost_usd": null,
+        "rollout_details": null,
+        "metadata": {
+            "iterations": 29,
+            "conversation_length": 59,
+            "status": "completed_with_signal",
+            "task_complete_signal": true
+        }
+    },
+    "verifier_result": {
+        "rewards": {
+            "reward": 1.0
+        }
+    },
+    "exception_info": null,
+    "started_at": "2026-01-11T23:05:52.819835",
+    "finished_at": "2026-01-11T23:12:33.582190",
+    "environment_setup": {
+        "started_at": "2026-01-11T23:05:52.820758",
+        "finished_at": "2026-01-11T23:06:11.768226"
+    },
+    "agent_setup": {
+        "started_at": "2026-01-11T23:06:11.768238",
+        "finished_at": "2026-01-11T23:06:11.781479"
+    },
+    "agent_execution": {
+        "started_at": "2026-01-11T23:06:11.781498",
+        "finished_at": "2026-01-11T23:10:26.420220"
+    },
+    "verifier": {
+        "started_at": "2026-01-11T23:10:26.420356",
+        "finished_at": "2026-01-11T23:12:20.013353"
+    }
+}

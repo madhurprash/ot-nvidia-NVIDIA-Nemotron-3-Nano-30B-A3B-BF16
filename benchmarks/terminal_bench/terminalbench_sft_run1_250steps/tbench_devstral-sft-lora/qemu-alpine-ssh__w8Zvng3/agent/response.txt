@@ -1,0 +1,88 @@
+================================================================================
+SYSTEM PROMPT
+================================================================================
+
+You are an autonomous agent executing tasks in a sandboxed environment. Follow these instructions carefully.
+
+## WORKING DIRECTORY & ENVIRONMENT CONTEXT
+
+Your current working directory is:
+bash: cannot set terminal process group (-1): Inappropriate ioctl for device
+bash: no job control in this shell
+/app
+
+Files in current directory (4 files):
+1. bash: cannot set terminal process group (-1): Inappropriate ioctl for device
+2. bash: no job control in this shell
+3. alpine-disk.qcow2
+4. alpine.iso
+
+**IMPORTANT**: This directory information is provided for your convenience at the start of the task. You should:
+- Use this information to understand the initial environment state
+- Avoid redundantly calling `ls` or similar commands just to list the same directory
+- Only use file listing commands if you need updated information (after creating/deleting files) or need to explore subdirectories
+- Work in the /app directory unless explicitly instructed otherwise
+
+## Core Guidelines:
+1. **Action-Oriented**: Focus on executing commands to complete the task rather than providing explanations
+2. **Iterative Problem-Solving**: Break down complex tasks into manageable steps
+3. **Command Execution**: ALWAYS provide bash commands in ```bash code blocks for execution
+4. **Result Analysis**: Carefully analyze command outputs to determine next steps
+5. **Error Handling**: If a command fails, analyze the error and adapt your approach
+6. **Task Completion**: When the task is fully complete, explicitly state "TASK COMPLETE"
+
+## Best Practices:
+- Use clear, well-formed bash commands
+- Install any required dependencies as needed
+- Verify command outputs before proceeding
+- Track your progress towards task completion
+- Be concise and direct in your responses
+
+## CRITICAL: Avoid Verification Loops
+**DO NOT get stuck repeating the same verification commands:**
+- Once you verify a file exists or contains correct content, move forward to the next step
+- Do NOT repeatedly check the same thing (e.g., `cat file.txt` 100+ times)
+- If you've verified something works, trust that result and proceed
+- Keep mental track of what you've already checked to avoid redundant verification
+- If a verification passes, that step is DONE - move to the next task requirement
+
+## Task Completion Recognition:
+- Complete the given task following the instructions precisely
+- Once you've created/verified all required outputs, immediately say "TASK COMPLETE"
+- Do NOT keep verifying after the task is done
+- Trust your verification results - if the output matches requirements, you're finished
+- Do not provide unnecessary explanations unless specifically asked
+
+Remember: Your goal is to complete the task efficiently through terminal commands.
+
+================================================================================
+TASK INSTRUCTION
+================================================================================
+
+Start the /app/alpine.iso image in qemu, and then start an ssh server on the alpine linux vm. When you're done, I should be able to run `ssh -p 2222 root@localhost` with password `password123` and be dropped into a shell. On the /app/alpine.iso image, the default username is root with no password.
+
+
+================================================================================
+AGENT EXECUTION LOG
+================================================================================
+
+
+============================================================
+ITERATION 1
+============================================================
+
+[ASSISTANT RESPONSE]
+I'll start by launching the Alpine Linux ISO in QEMU with SSH access configured. Let me begin by examining the current environment and then setting up the VM.[TOOL_CALLS]bash
+qemu-system-x86_64 -cdrom /app/alpine.iso -m 512M -netdev user,id=net0,hostfwd=tcp::2222-:22 -device virtio-net,netdev=net0 -nographic -serial mon:stdio
+```
+
+
+============================================================
+ITERATION 2
+============================================================
+
+[ASSISTANT RESPONSE]
+```bash
+qemu-system-x86_64 -cdrom /app/alpine.iso -m 512M -netdev user,id=net0,hostfwd=tcp::2222-:22 -device virtio-net,netdev=net0 -nographic -serial mon:stdio
+```
+
